@@ -128,7 +128,7 @@ export default function Home() {
         <div className="api-note">
           <strong>API disponível</strong>
           <code>POST /api/message</code>
-          <span>Retorna a arte como SVG.</span>
+          <span>Preview HTML exportado em PNG; API SVG preservada.</span>
         </div>
       </section>
 
@@ -156,7 +156,15 @@ export default function Home() {
                 </h1>
               </header>
               <div className="reflection">
-                <span className="highlight">{message.messageOfDay}</span>
+                  <span
+                    className="highlight"
+                    style={{
+                      backgroundColor: color,
+                      boxShadow: `0 0 0 2px ${color}`,
+                    }}
+                  >
+                    {message.messageOfDay}
+                  </span>
               </div>
               <footer className="footer">{message.account}</footer>
             </article>

@@ -26,7 +26,7 @@ export async function POST(request: Request) {
       `recadinho-do-ceu/${crypto.randomUUID()}.png`,
       file,
       {
-        access: "private",
+        access: "public",
         contentType: "image/png",
         addRandomSuffix: false,
       },

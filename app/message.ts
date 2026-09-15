@@ -122,7 +122,7 @@ export function renderMessageSvg(
     ${gospelMarkup}
     <text x="260" y="${330 + gospelLines.length * 42}" class="gospel book">${escapeXml(formatBook(data.book))}</text>
   </g>
-  <rect x="256" y="570" width="838" height="${bodyHighlightHeight}" rx="2" fill="#d1f3bd"/>
+  <rect x="256" y="570" width="838" height="${bodyHighlightHeight}" rx="2" fill="${color}"/>
   <g font-family="Arial, Helvetica, sans-serif" fill="#111">
     ${bodyMarkup}
     <text x="260" y="${760 + bodyLines.length * 44}" class="account">${escapeXml(data.account)}</text>

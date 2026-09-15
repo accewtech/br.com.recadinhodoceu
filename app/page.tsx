@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Download, Dices, RefreshCw } from "lucide-react";
 import { toPng } from "html-to-image";
 import {
@@ -128,7 +128,7 @@ export default function Home() {
         <div className="api-note">
           <strong>API disponível</strong>
           <code>POST /api/message</code>
-          <span>Retorna a arte como SVG.</span>
+          <span>Preview HTML exportado em PNG; API SVG preservada.</span>
         </div>
       </section>
 
@@ -140,7 +140,10 @@ export default function Home() {
         <div
           className="preview-frame"
           ref={previewRef}
-          style={{ backgroundColor: color }}
+          style={{
+            backgroundColor: color,
+            "--message-highlight": color,
+          } as CSSProperties}
         >
           <div className="card-stack">
             <article className="card">
@@ -153,7 +156,15 @@ export default function Home() {
                 </h1>
               </header>
               <div className="reflection">
-                <span className="highlight">{message.messageOfDay}</span>
+                  <span
+                    className="highlight"
+                    style={{
+                      backgroundColor: color,
+                      boxShadow: `0 0 0 2px ${color}`,
+                    }}
+                  >
+                    {message.messageOfDay}
+                  </span>
               </div>
               <footer className="footer">{message.account}</footer>
             </article>

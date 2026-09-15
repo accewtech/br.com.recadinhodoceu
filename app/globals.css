@@ -201,8 +201,8 @@ textarea:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: min(100%, 600px);
-  aspect-ratio: 5 / 4;
+  width: min(100%, 675px);
+  aspect-ratio: 1350 / 1080;
   margin: auto;
   overflow: hidden;
   box-shadow: 0 24px 70px #74585d26;
@@ -210,89 +210,93 @@ textarea:focus {
 
 .card-stack {
   position: relative;
-  width: 72%;
-  max-width: 960px;
+  width: 44.45%;
+  height: 59.25%;
+  margin-top: 6%;
 }
 
 .card-stack::before {
   content: "";
   position: absolute;
-  top: -6%;
-  left: 10%;
-  right: 10%;
+  top: -12.5%;
+  left: 17%;
+  right: 17%;
   z-index: 1;
-  height: 12%;
-  border-radius: 12px;
-  background: #7d9673;
-  filter: blur(12px);
-  opacity: 0.8;
+  height: 11%;
+  border-radius: 12px 12px 0 0;
+  background: #829979;
+  filter: blur(8px);
+  opacity: 0.72;
 }
 
 .card-stack::after {
   content: "";
   position: absolute;
-  top: -2.8%;
-  left: 4%;
-  right: 4%;
+  top: -6.25%;
+  left: 6.5%;
+  right: 6.5%;
   z-index: 2;
   height: 8%;
-  border-radius: 12px;
-  background: #e4ece0;
+  border-radius: 12px 12px 0 0;
+  background: #edf1eb;
+  box-shadow: 0 5px 14px rgb(0 0 0 / 3%);
 }
 
 .card {
   position: relative;
   z-index: 3;
-  min-height: 76%;
   display: flex;
   flex-direction: column;
-  padding: 10% 8%;
-  border-radius: 14px;
-  background: #fafbf9;
-  box-shadow: 0 10px 25px rgb(0 0 0 / 4%);
+  width: 100%;
+  height: 100%;
+  padding: 17.7% 12.5% 10.5%;
+  border-radius: 12px;
+  background: #fcfcfb;
+  box-shadow: 0 10px 25px rgb(0 0 0 / 5%);
 }
 
 .verse-title {
   margin: 0;
   color: #0d0d0d;
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(15px, 2.1vw, 25px);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(11px, 1vw, 27px);
   font-weight: 900;
-  line-height: 1.35;
-  letter-spacing: -0.01em;
+  line-height: 1.4;
+  letter-spacing: -0.025em;
   text-transform: uppercase;
 }
 
 .verse-reference {
   display: block;
-  margin-top: 6px;
-  font-size: 0.95em;
-  font-style: italic;
+  margin-top: 5px;
+  font-size: 0.94em;
   text-transform: none;
 }
 
 .reflection {
-  margin-top: 10%;
+  margin-top: 11.5%;
   color: #111;
-  font-size: clamp(15px, 2.1vw, 25px);
-  font-weight: 500;
-  line-height: 1.45;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(11px, 1vw, 27px);
+  font-weight: 400;
+  line-height: 1.25;
 }
 
 .highlight {
   padding: 1px 3px;
-  border-radius: 2px;
-  background: #d1f3bd;
-  box-shadow: 0 0 0 2px #d1f3bd;
+  border-radius: 1px;
+  background: #cdf0b9;
+  box-shadow: 0 0 0 2px #cdf0b9;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
 
 .footer {
-  margin-top: 12%;
+  margin-top: auto;
   color: #222;
-  font-size: clamp(12px, 1.5vw, 18px);
-  font-weight: 500;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(9px, 0.75vw, 18px);
+  font-weight: 400;
 }
 
 @keyframes spin {

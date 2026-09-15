@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Download, Dices, RefreshCw } from "lucide-react";
 import { toPng } from "html-to-image";
 import {
@@ -140,7 +140,10 @@ export default function Home() {
         <div
           className="preview-frame"
           ref={previewRef}
-          style={{ backgroundColor: color }}
+          style={{
+            backgroundColor: color,
+            "--message-highlight": color,
+          } as CSSProperties}
         >
           <div className="card-stack">
             <article className="card">

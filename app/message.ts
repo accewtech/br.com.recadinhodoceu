@@ -97,41 +97,47 @@ export function renderMessageSvg(
   data: MessageData,
   color = getRandomMessageColor(),
 ) {
-  const gospelLines = wrapText(data.gospel.toUpperCase(), 32);
-  const bodyLines = wrapText(data.messageOfDay, 42);
+  const cardX = 130;
+  const cardY = 253;
+  const cardWidth = 636;
+  const cardHeight = 678;
+  const contentX = 210;
+  const gospelY = 373;
+  const gospelLines = wrapText(data.gospel.toUpperCase(), 31);
+  const bodyLines = wrapText(data.messageOfDay, 31);
   const gospelMarkup = gospelLines
     .map(
       (line, index) =>
-        `<text x="260" y="${330 + index * 42}" class="gospel">${escapeXml(line)}</text>`,
+        `<text x="${contentX}" y="${gospelY + index * 40}" class="gospel">${escapeXml(line)}</text>`,
     )
     .join("");
+  const referenceY = gospelY + gospelLines.length * 40 + 4;
+  const bodyY = referenceY + 68;
   const bodyMarkup = bodyLines
     .map(
       (line, index) =>
-        `<text x="260" y="${590 + index * 44}" class="body">${escapeXml(line)}</text>`,
+        `<rect x="${contentX}" y="${bodyY - 27 + index * 39}" width="${Math.min(line.length * 15 + 8, 470)}" height="35" fill="${color}"/>\n        <text x="${contentX}" y="${bodyY + index * 39}" class="body">${escapeXml(line)}</text>`,
     )
     .join("");
-  const bodyHighlightHeight = Math.max(52, bodyLines.length * 44 + 12);
+  const logoY = cardY + cardHeight - 104;
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1350" height="1080" viewBox="0 0 1350 1080">
-  <rect width="1350" height="1080" fill="${color}"/>
-  <rect x="300" y="142" width="750" height="58" rx="12" fill="#7d9673" opacity=".8"/>
-  <rect x="242" y="200" width="866" height="44" rx="12" fill="#e4ece0"/>
-  <rect x="185" y="230" width="980" height="760" rx="14" fill="#fafbf9"/>
-  <g font-family="Georgia, serif" fill="#070707">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="896" height="1120" viewBox="0 0 896 1120">
+  <rect width="896" height="1120" fill="${color}"/>
+  <image href="/assets/card%203.png" x="${cardX + 51}" y="${cardY - 85}" width="${cardWidth - 102}" height="48" preserveAspectRatio="none"/>
+  <image href="/assets/card%202.png" x="${cardX + 22}" y="${cardY - 43}" width="${cardWidth - 44}" height="48" preserveAspectRatio="none"/>
+  <image href="/assets/card%201.png" x="${cardX}" y="${cardY}" width="${cardWidth}" height="${cardHeight}" preserveAspectRatio="none"/>
+  <g font-family="'Bona Nova SC', Georgia, serif" fill="#172d32">
     ${gospelMarkup}
-    <text x="260" y="${330 + gospelLines.length * 42}" class="gospel book">${escapeXml(formatBook(data.book))}</text>
+    <text x="${contentX}" y="${referenceY}" class="gospel book">${escapeXml(formatBook(data.book))}</text>
   </g>
-  <rect x="256" y="570" width="838" height="${bodyHighlightHeight}" rx="2" fill="${color}"/>
   <g font-family="Arial, Helvetica, sans-serif" fill="#111">
     ${bodyMarkup}
-    <text x="260" y="${760 + bodyLines.length * 44}" class="account">${escapeXml(data.account)}</text>
   </g>
+  <image href="/assets/logo.png" x="${contentX}" y="${logoY}" width="160" height="44" preserveAspectRatio="xMinYMid meet"/>
   <style>
-    .gospel { font-size: 25px; font-weight: 700; }
-    .book { font-size: 24px; }
-    .body { font-size: 25px; }
-    .account { font-size: 18px; }
+    .gospel { font-size: 29px; font-weight: 700; }
+    .book { font-size: 28px; }
+    .body { font-size: 27px; }
   </style>
 </svg>`;
 }

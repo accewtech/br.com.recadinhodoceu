@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Download, Dices, RefreshCw } from "lucide-react";
+import Image from "next/image";
 import { toPng } from "html-to-image";
 import {
   defaultMessage,
@@ -28,10 +29,11 @@ export default function Home() {
     if (!previewRef.current) return;
     setLoading(true);
     try {
+      await document.fonts.ready;
       const dataUrl = await toPng(previewRef.current, {
-        canvasHeight: 1080,
-        canvasWidth: 1350,
-        pixelRatio: 2,
+        canvasHeight: 1120,
+        canvasWidth: 896,
+        pixelRatio: 1,
         quality: 1,
       });
       const response = await fetch(dataUrl);
@@ -149,7 +151,7 @@ export default function Home() {
       <section className="preview-panel">
         <div className="preview-heading">
           <span>Visualização</span>
-          <span>1350 × 1080</span>
+          <span>896 × 1120</span>
         </div>
         <div
           className="preview-frame"
@@ -162,8 +164,10 @@ export default function Home() {
           }
         >
           <div className="card-stack">
+            <div className="backing-layer backing-layer-dark" />
+            <div className="backing-layer backing-layer-light" />
             <article className="card">
-              <header>
+              <header className="card-header">
                 <h1 className="verse-title">
                   {message.gospel.toUpperCase()}
                   <span className="verse-reference">
@@ -172,17 +176,19 @@ export default function Home() {
                 </h1>
               </header>
               <div className="reflection">
-                <span
-                  className="highlight"
-                  style={{
-                    backgroundColor: color,
-                    boxShadow: `0 0 0 2px ${color}`,
-                  }}
-                >
+                <span className="highlight">
                   {message.messageOfDay}
                 </span>
               </div>
-              <footer className="footer">{message.account}</footer>
+              <footer className="footer">
+                <Image
+                  alt="Recadinho do Céu"
+                  className="brand-logo"
+                  height={50}
+                  src="/assets/logo.png"
+                  width={180}
+                />
+              </footer>
             </article>
           </div>
         </div>

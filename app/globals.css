@@ -205,6 +205,11 @@ textarea:focus {
   aspect-ratio: 4 / 5;
   margin: auto;
   overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.37) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
   box-shadow: 0 24px 70px #74585d26;
 }
 

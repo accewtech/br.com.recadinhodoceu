@@ -10,9 +10,11 @@ npm run dev
 
 Abra `http://localhost:3000` para usar o editor visual.
 
+No Windows, a API usa uma instalação local do Google Chrome. Se ele estiver em um caminho diferente do padrão, defina `CHROME_EXECUTABLE_PATH`. Em ambientes serverless Linux, o Chromium é fornecido pela dependência do projeto; reserve pelo menos 512 MB de memória para a função.
+
 ## API
 
-`POST /api/message` recebe `gospel`, `book`, `messageOfDay` e `account` como campos obrigatórios. A resposta é um SVG para download (anexado como `message-from-heaven.svg`) com uma cor de fundo sorteada da paleta do projeto. Na tela, o botão baixa a prévia diretamente como PNG; nenhum arquivo é enviado ou salvo em um serviço externo.
+`POST /api/message` recebe `gospel`, `book`, `messageOfDay` e `account` como campos obrigatórios e aceita `color` opcional, que deve ser um valor da paleta do projeto. A tela e a API compartilham o mesmo componente HTML e arquivo CSS; enviando os mesmos campos e a mesma cor, ambas compõem a mesma arte. Sem `color`, a API sorteia uma opção da paleta. A rota renderiza o HTML com Chromium headless e responde com um arquivo WebP (`image/webp`) de 896 × 1120 para download. Na tela, o botão continua baixando a prévia como PNG. A composição do cartão usa HTML/CSS, sem SVG ou armazenamento externo.
 
 ```json
 {

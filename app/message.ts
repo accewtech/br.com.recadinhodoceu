@@ -10,6 +10,8 @@ export const MESSAGE_COLORS = [
   "#FED9C2",
 ] as const;
 
+export type MessageColor = (typeof MESSAGE_COLORS)[number];
+
 export type MessageData = {
   gospel: string;
   book: string;
@@ -25,16 +27,54 @@ export const defaultMessage: MessageData = {
   account: "@recadinhodoceu__",
 };
 
-export function getRandomMessageColor() {
+export function getRandomMessageColor(): MessageColor {
   return MESSAGE_COLORS[Math.floor(Math.random() * MESSAGE_COLORS.length)];
+}
+
+function escapeHtml(value: string) {
+  return value.replace(
+    /[&<>"']/g,
+    (character) =>
+      ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;",
+      })[character] ?? character,
+  );
+}
+
+export function renderMessageCardMarkup(message: MessageData) {
+  const gospel = escapeHtml(message.gospel.toUpperCase());
+  const book = escapeHtml(message.book.replace(/^\(|\)$/g, ""));
+  const messageOfDay = escapeHtml(message.messageOfDay);
+  const account = escapeHtml(message.account);
+
+  return `<div class="card-stack">
+    <div class="backing-layer backing-layer-dark"></div>
+    <div class="backing-layer backing-layer-light"></div>
+    <article class="card">
+      <header class="card-header">
+        <h1 class="verse-title">${gospel}<span class="verse-reference">(${book})</span></h1>
+      </header>
+      <div class="reflection"><span class="highlight">${messageOfDay}</span></div>
+      <footer class="footer">${account}</footer>
+    </article>
+  </div>`;
 }
 
 export function validateMessagePayload(value: unknown): {
   data?: MessageData;
+  color?: MessageColor;
   missing: string[];
+  hasInvalidColor: boolean;
 } {
   if (!value || typeof value !== "object") {
-    return { missing: ["gospel", "book", "messageOfDay", "account"] };
+    return {
+      missing: ["gospel", "book", "messageOfDay", "account"],
+      hasInvalidColor: false,
+    };
   }
 
   const payload = value as Record<string, unknown>;
@@ -42,8 +82,12 @@ export function validateMessagePayload(value: unknown): {
   const missing = requiredFields.filter(
     (field) => typeof payload[field] !== "string" || !payload[field]?.trim(),
   );
+  const color = MESSAGE_COLORS.find((candidate) => candidate === payload.color);
+  const hasInvalidColor = payload.color !== undefined && !color;
 
-  if (missing.length > 0) return { missing };
+  if (missing.length > 0 || hasInvalidColor) {
+    return { missing, hasInvalidColor };
+  }
 
   return {
     data: {
@@ -52,93 +96,8 @@ export function validateMessagePayload(value: unknown): {
       messageOfDay: String(payload.messageOfDay).trim(),
       account: String(payload.account).trim(),
     },
+    color,
     missing: [],
+    hasInvalidColor: false,
   };
-}
-
-function escapeXml(value: string) {
-  return value.replace(
-    /[&<>'"]/g,
-    (character) =>
-      ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        "'": "&apos;",
-        '"': "&quot;",
-      })[character] ?? character,
-  );
-}
-
-function wrapText(text: string, maxCharacters: number) {
-  const lines: string[] = [];
-  let line = "";
-
-  for (const word of text.split(/\s+/)) {
-    const nextLine = line ? `${line} ${word}` : word;
-    if (nextLine.length > maxCharacters && line) {
-      lines.push(line);
-      line = word;
-    } else {
-      line = nextLine;
-    }
-  }
-
-  if (line) lines.push(line);
-  return lines;
-}
-
-function formatBook(book: string) {
-  const value = book.replace(/^\(|\)$/g, "").trim();
-  return `(${value})`;
-}
-
-export function renderMessageSvg(
-  data: MessageData,
-  color = getRandomMessageColor(),
-) {
-  const cardX = 130;
-  const cardY = 253;
-  const cardWidth = 636;
-  const cardHeight = 678;
-  const contentX = 210;
-  const gospelY = 373;
-  const gospelLines = wrapText(data.gospel.toUpperCase(), 31);
-  const bodyLines = wrapText(data.messageOfDay, 31);
-  const gospelMarkup = gospelLines
-    .map(
-      (line, index) =>
-        `<text x="${contentX}" y="${gospelY + index * 40}" class="gospel">${escapeXml(line)}</text>`,
-    )
-    .join("");
-  const referenceY = gospelY + gospelLines.length * 40 + 4;
-  const bodyY = referenceY + 68;
-  const bodyMarkup = bodyLines
-    .map(
-      (line, index) =>
-        `<rect x="${contentX}" y="${bodyY - 27 + index * 39}" width="${Math.min(line.length * 15 + 8, 470)}" height="35" fill="${color}"/>\n        <text x="${contentX}" y="${bodyY + index * 39}" class="body">${escapeXml(line)}</text>`,
-    )
-    .join("");
-  const logoY = cardY + cardHeight - 104;
-
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="896" height="1120" viewBox="0 0 896 1120">
-  <rect width="896" height="1120" fill="${color}"/>
-  <image href="/assets/card%203.png" x="${cardX + 51}" y="${cardY - 85}" width="${cardWidth - 102}" height="48" preserveAspectRatio="none"/>
-  <image href="/assets/card%202.png" x="${cardX + 22}" y="${cardY - 43}" width="${cardWidth - 44}" height="48" preserveAspectRatio="none"/>
-  <image href="/assets/card%201.png" x="${cardX}" y="${cardY}" width="${cardWidth}" height="${cardHeight}" preserveAspectRatio="none"/>
-  <g font-family="'Rakkas', Georgia, serif" fill="#172d32">
-    ${gospelMarkup}
-    <text x="${contentX}" y="${referenceY}" class="gospel book">${escapeXml(formatBook(data.book))}</text>
-  </g>
-  <g font-family="Arial, Helvetica, sans-serif" fill="#111">
-    ${bodyMarkup}
-  </g>
-  <image href="/assets/logo.png" x="${contentX}" y="${logoY}" width="160" height="44" preserveAspectRatio="xMinYMid meet"/>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Rakkas&amp;display=swap");
-    .gospel { font-size: 29px; font-weight: 700; }
-    .book { font-size: 28px; }
-    .body { font-size: 27px; }
-  </style>
-</svg>`;
 }

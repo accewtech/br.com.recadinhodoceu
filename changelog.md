@@ -4,6 +4,10 @@ Notable project changes are recorded here. Entries are written in English and gr
 
 ## [Unreleased]
 
+### Changed
+
+- Render `POST /api/message` as a downloadable WebP using the same HTML component and CSS as the browser preview.
+
 ## [0.2.0] - 2026-10-12
 
 ### Added

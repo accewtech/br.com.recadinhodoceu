@@ -1,18 +1,20 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Download, Dices, RefreshCw } from "lucide-react";
 import { toPng } from "html-to-image";
 import {
   defaultMessage,
   getRandomMessageColor,
   MESSAGE_COLORS,
+  type MessageColor,
   type MessageData,
 } from "./message";
+import { MessageCard } from "./message-card";
 
 export default function Home() {
   const [message, setMessage] = useState<MessageData>(defaultMessage);
-  const [color, setColor] = useState<string>(MESSAGE_COLORS[1]);
+  const [color, setColor] = useState<MessageColor>(MESSAGE_COLORS[1]);
   const [loading, setLoading] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -130,7 +132,9 @@ export default function Home() {
         <div className="api-note">
           <strong>API disponível</strong>
           <code>POST /api/message</code>
-          <span>Gera um SVG para baixar ou integrar em outros sistemas.</span>
+          <span>
+            Gera um arquivo WebP para baixar ou integrar em outros sistemas.
+          </span>
         </div>
       </section>
 
@@ -139,35 +143,7 @@ export default function Home() {
           <span>Visualização</span>
           <span>896 × 1120</span>
         </div>
-        <div
-          className="preview-frame"
-          ref={previewRef}
-          style={
-            {
-              backgroundColor: color,
-              "--message-highlight": color,
-            } as CSSProperties
-          }
-        >
-          <div className="card-stack">
-            <div className="backing-layer backing-layer-dark" />
-            <div className="backing-layer backing-layer-light" />
-            <article className="card">
-              <header className="card-header">
-                <h1 className="verse-title">
-                  {message.gospel.toUpperCase()}
-                  <span className="verse-reference">
-                    ({message.book.replace(/^\(|\)$/g, "")})
-                  </span>
-                </h1>
-              </header>
-              <div className="reflection">
-                <span className="highlight">{message.messageOfDay}</span>
-              </div>
-              <footer className="footer">{message.account}</footer>
-            </article>
-          </div>
-        </div>
+        <MessageCard color={color} message={message} previewRef={previewRef} />
       </section>
     </main>
   );

@@ -29,6 +29,7 @@ export async function POST(request: Request) {
     headers: {
       "Cache-Control": "no-store",
       "Content-Type": "image/svg+xml; charset=utf-8",
+      "Content-Disposition": 'attachment; filename="message-from-heaven.svg"',
     },
   });
 }

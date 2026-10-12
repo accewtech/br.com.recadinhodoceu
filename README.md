@@ -12,7 +12,7 @@ Abra `http://localhost:3000` para usar o editor visual.
 
 ## API
 
-`POST /api/message` recebe `gospel`, `book`, `messageOfDay` e `account` como campos obrigatórios. A resposta é uma imagem SVG com uma cor de fundo sorteada da paleta do projeto.
+`POST /api/message` recebe `gospel`, `book`, `messageOfDay` e `account` como campos obrigatórios. A resposta é um SVG para download (anexado como `message-from-heaven.svg`) com uma cor de fundo sorteada da paleta do projeto. Na tela, o botão baixa a prévia diretamente como PNG; nenhum arquivo é enviado ou salvo em um serviço externo.
 
 ```json
 {

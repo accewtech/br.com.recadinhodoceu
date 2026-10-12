@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Download, Dices, RefreshCw } from "lucide-react";
-import Image from "next/image";
 import { toPng } from "html-to-image";
 import {
   defaultMessage,
@@ -36,19 +35,6 @@ export default function Home() {
         pixelRatio: 1,
         quality: 1,
       });
-      const response = await fetch(dataUrl);
-      const blob = await response.blob();
-      const formData = new FormData();
-      formData.append("file", blob, "recadinho-do-ceu.png");
-
-      const uploadResponse = await fetch("/api/image", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!uploadResponse.ok) {
-        throw new Error("Não foi possível salvar a imagem.");
-      }
 
       const link = document.createElement("a");
       link.download = "recadinho-do-ceu.png";
@@ -144,7 +130,7 @@ export default function Home() {
         <div className="api-note">
           <strong>API disponível</strong>
           <code>POST /api/message</code>
-          <span>Preview HTML exportado em PNG e salvo no Blob.</span>
+          <span>Gera um SVG para baixar ou integrar em outros sistemas.</span>
         </div>
       </section>
 

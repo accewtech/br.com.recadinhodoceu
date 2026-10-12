@@ -4,6 +4,20 @@ Notable project changes are recorded here. Entries are written in English and gr
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-12
+
+### Added
+
+- Made `POST /api/message` return the generated SVG as a downloadable attachment.
+
+### Changed
+
+- Download the preview PNG directly in the browser without uploading it to an external service.
+
+### Removed
+
+- Removed the unused image upload API and the Vercel Blob dependency.
+
 ## [0.1.3] - 2026-10-12
 
 ### Fixed

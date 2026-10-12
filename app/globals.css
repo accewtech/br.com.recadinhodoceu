@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Bona+Nova+SC:ital,wght@0,400;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rakkas&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -218,6 +219,7 @@ textarea:focus {
   width: 71%;
   aspect-ratio: 545 / 581;
   margin-top: 5%;
+  container-type: inline-size;
 }
 
 .backing-layer {
@@ -252,7 +254,7 @@ textarea:focus {
   height: 100%;
   padding: 18% 12.5% 10.5%;
   border-radius: 8px;
-  background: #fafaf9 url("/assets/card%201.png") center / 100% 100% no-repeat;
+  background: #fafafa;
   box-shadow: 0 10px 25px rgb(0 0 0 / 5%);
 }
 
@@ -263,8 +265,8 @@ textarea:focus {
 .verse-title {
   margin: 0;
   color: #0d0d0d;
-  font-family: "Bona Nova SC", Georgia, serif;
-  font-size: clamp(13px, 1.6vw, 27px);
+  font-family: "Rakkas", Georgia, serif;
+  font-size: clamp(13px, 4cqw, 27px);
   font-weight: 700;
   line-height: 1.4;
   text-transform: uppercase;
@@ -273,17 +275,20 @@ textarea:focus {
 .verse-reference {
   display: block;
   margin-top: 4px;
-  font-size: 0.94em;
   text-transform: none;
+  font-size: clamp(13px, 4cqw, 27px);
 }
 
 .reflection {
+  min-width: 0;
+  max-width: 100%;
   margin-top: 10%;
   color: #111;
-  font-family: var(--font-dm-sans), sans-serif;
-  font-size: clamp(13px, 1.6vw, 27px);
+  font-family: "Inter", sans-serif;
+  font-size: clamp(13px, 4cqw, 26px);
   font-weight: 400;
   line-height: 1.25;
+  overflow-wrap: anywhere;
 }
 
 .highlight {
@@ -292,11 +297,15 @@ textarea:focus {
   background: var(--message-highlight);
   box-shadow: 0 0 0 2px var(--message-highlight);
   box-decoration-break: clone;
+  font-size: clamp(12px, 4cqw, 18px);
   -webkit-box-decoration-break: clone;
 }
 
 .footer {
   margin-top: auto;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: clamp(12px, 4cqw, 26px);
 }
 
 .brand-logo {

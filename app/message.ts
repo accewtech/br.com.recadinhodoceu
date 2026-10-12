@@ -126,7 +126,7 @@ export function renderMessageSvg(
   <image href="/assets/card%203.png" x="${cardX + 51}" y="${cardY - 85}" width="${cardWidth - 102}" height="48" preserveAspectRatio="none"/>
   <image href="/assets/card%202.png" x="${cardX + 22}" y="${cardY - 43}" width="${cardWidth - 44}" height="48" preserveAspectRatio="none"/>
   <image href="/assets/card%201.png" x="${cardX}" y="${cardY}" width="${cardWidth}" height="${cardHeight}" preserveAspectRatio="none"/>
-  <g font-family="'Bona Nova SC', Georgia, serif" fill="#172d32">
+  <g font-family="'Rakkas', Georgia, serif" fill="#172d32">
     ${gospelMarkup}
     <text x="${contentX}" y="${referenceY}" class="gospel book">${escapeXml(formatBook(data.book))}</text>
   </g>
@@ -135,6 +135,7 @@ export function renderMessageSvg(
   </g>
   <image href="/assets/logo.png" x="${contentX}" y="${logoY}" width="160" height="44" preserveAspectRatio="xMinYMid meet"/>
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Rakkas&amp;display=swap");
     .gospel { font-size: 29px; font-weight: 700; }
     .book { font-size: 28px; }
     .body { font-size: 27px; }

@@ -1,6 +1,6 @@
 ---
 name: engineering-change
-description: Implement or review a feature, bug fix, or refactor in the Recadinho do Ceu repository while following its Next.js and TypeScript conventions.
+description: Implement or review a feature, bug fix, or refactor in the Message from Heaven repository while following its Next.js and TypeScript conventions.
 ---
 
 # Engineering Change Workflow

@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     }
 
     const blob = await put(
-      `recadinho-do-ceu/${crypto.randomUUID()}.png`,
+      `message-from-heaven/${crypto.randomUUID()}.png`,
       file,
       {
         access: "public",

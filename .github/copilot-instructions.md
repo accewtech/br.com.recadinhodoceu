@@ -2,7 +2,7 @@
 
 ## Project Context
 
-- This repository is the `Recadinho do Ceu` web application built with Next.js App Router, React, and TypeScript.
+- This repository is the `Message from Heaven` web application built with Next.js App Router, React, and TypeScript.
 - Keep the current application architecture intact. In particular, `app/api/**/route.ts` files are Next.js Route Handlers; do not replace them with Fastify as part of routine feature work.
 - The Fastify, MongoDB/Mongoose, Zod, `fastify-zod-openapi`, and ReDoc standards apply to dedicated backend services when they are introduced. They do not describe dependencies currently present in this repository.
 - Review `package.json` and nearby implementation before choosing a library, command, or architectural pattern.

@@ -154,10 +154,12 @@ export default function Home() {
         <div
           className="preview-frame"
           ref={previewRef}
-          style={{
-            backgroundColor: color,
-            "--message-highlight": color,
-          } as CSSProperties}
+          style={
+            {
+              backgroundColor: color,
+              "--message-highlight": color,
+            } as CSSProperties
+          }
         >
           <div className="card-stack">
             <article className="card">
@@ -170,15 +172,15 @@ export default function Home() {
                 </h1>
               </header>
               <div className="reflection">
-                  <span
-                    className="highlight"
-                    style={{
-                      backgroundColor: color,
-                      boxShadow: `0 0 0 2px ${color}`,
-                    }}
-                  >
-                    {message.messageOfDay}
-                  </span>
+                <span
+                  className="highlight"
+                  style={{
+                    backgroundColor: color,
+                    boxShadow: `0 0 0 2px ${color}`,
+                  }}
+                >
+                  {message.messageOfDay}
+                </span>
               </div>
               <footer className="footer">{message.account}</footer>
             </article>

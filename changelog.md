@@ -4,9 +4,15 @@ Notable project changes are recorded here. Entries are written in English and gr
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-12
+
+### Added
+
+- Added a downloadable WebP export for `POST /api/message` using the same shared message-card component and CSS as the browser preview.
+
 ### Changed
 
-- Render `POST /api/message` as a downloadable WebP using the same HTML component and CSS as the browser preview.
+- Updated the export and validation flow so the generated message card stays visually aligned with the browser preview.
 
 ## [0.2.0] - 2026-10-12
 

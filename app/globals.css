@@ -207,8 +207,8 @@ textarea:focus {
   overflow: hidden;
   background: linear-gradient(
     0deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.37) 100%
+    rgba(255, 255, 255, 0.37) 0%,
+    rgba(255, 255, 255, 0) 100%
   );
   box-shadow: 0 24px 70px #74585d26;
 }
@@ -239,7 +239,8 @@ textarea:focus {
   left: 3.5%;
   width: 93%;
   height: 7%;
-  background: color-mix(in srgb, var(--message-highlight) 76%, white);
+  background: color-mix(in srgb, var(--message-highlight) 50%, white);
+  box-shadow: 0 3px 8px rgb(0 0 0 / 15%);
 }
 
 .card {

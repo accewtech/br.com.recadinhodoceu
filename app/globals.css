@@ -225,7 +225,7 @@ textarea:focus {
   left: 8%;
   width: 84%;
   height: 7%;
-  background: #39788a url("/assets/card%203.png") center / 100% 100% no-repeat;
+  background: color-mix(in srgb, var(--message-highlight) 76%, black);
   box-shadow: 0 3px 8px rgb(0 0 0 / 15%);
 }
 
@@ -234,7 +234,7 @@ textarea:focus {
   left: 3.5%;
   width: 93%;
   height: 7%;
-  background: #91ccdd url("/assets/card%202.png") center / 100% 100% no-repeat;
+  background: color-mix(in srgb, var(--message-highlight) 76%, white);
 }
 
 .card {

@@ -176,19 +176,9 @@ export default function Home() {
                 </h1>
               </header>
               <div className="reflection">
-                <span className="highlight">
-                  {message.messageOfDay}
-                </span>
+                <span className="highlight">{message.messageOfDay}</span>
               </div>
-              <footer className="footer">
-                <Image
-                  alt="Recadinho do Céu"
-                  className="brand-logo"
-                  height={50}
-                  src="/assets/logo.png"
-                  width={180}
-                />
-              </footer>
+              <footer className="footer">{message.account}</footer>
             </article>
           </div>
         </div>

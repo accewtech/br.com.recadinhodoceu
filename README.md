@@ -14,7 +14,7 @@ No Windows, a API usa uma instalação local do Google Chrome. Se ele estiver em
 
 ## API
 
-`POST /api/message` recebe `gospel`, `book`, `messageOfDay` e `account` como campos obrigatórios e aceita `color` opcional, que deve ser um valor da paleta do projeto. A tela e a API compartilham o mesmo componente HTML e arquivo CSS; enviando os mesmos campos e a mesma cor, ambas compõem a mesma arte. Sem `color`, a API sorteia uma opção da paleta. A rota renderiza o HTML com Chromium headless e responde com um arquivo WebP (`image/webp`) de 896 × 1120 para download. Na tela, o botão continua baixando a prévia como PNG. A composição do cartão usa HTML/CSS, sem SVG ou armazenamento externo.
+`POST /api/message` recebe `gospel`, `book`, `messageOfDay` e `account` como campos obrigatórios e aceita `color` opcional, que deve ser um valor da paleta do projeto. A tela e a API compartilham o mesmo componente HTML e arquivo CSS; enviando os mesmos campos e a mesma cor, ambas compõem a mesma arte. Sem `color`, a API sorteia uma opção da paleta. A rota renderiza o HTML com Chromium headless e responde com um arquivo WebP (`image/webp`) de 896 × 1120 para download. Na tela, o botão baixa a prévia como PNG de 1080 × 1350. A composição do cartão usa HTML/CSS, sem SVG ou armazenamento externo.
 
 ```json
 {

@@ -32,8 +32,8 @@ export default function Home() {
     try {
       await document.fonts.ready;
       const dataUrl = await toPng(previewRef.current, {
-        canvasHeight: 1120,
-        canvasWidth: 896,
+        canvasHeight: 1350,
+        canvasWidth: 1080,
         pixelRatio: 1,
         quality: 1,
       });
@@ -141,7 +141,7 @@ export default function Home() {
       <section className="preview-panel">
         <div className="preview-heading">
           <span>Visualização</span>
-          <span>896 × 1120</span>
+          <span>1080 × 1350</span>
         </div>
         <MessageCard color={color} message={message} previewRef={previewRef} />
       </section>

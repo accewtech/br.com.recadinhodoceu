@@ -4,6 +4,13 @@ Notable project changes are recorded here. Entries are written in English and gr
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-10-23
+
+### Fixed
+
+- Corrected the browser preview and PNG download dimensions to 1080 × 1350.
+- Included the Chromium binaries in the traced files for the message API.
+
 ## [0.3.0] - 2026-10-12
 
 ### Added

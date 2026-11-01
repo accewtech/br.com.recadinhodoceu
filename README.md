@@ -21,6 +21,8 @@ No Windows, a API usa uma instalação local do Google Chrome. Se ele estiver em
 
 As interfaces estão disponíveis em `/v1` e `/v2`. A rota `/` mantém a interface da v1. A API atual permanece disponível em `POST /api/message` e também em `POST /api/v1/message`.
 
+As páginas ficam em `pages/`, usando o Pages Router. As regras e componentes de cada versão ficam em `src/v1` e `src/v2`; os recursos compartilhados ficam em `src/shared`. As Route Handlers das APIs permanecem organizadas em `app/api/v1` e `app/api/v2`.
+
 `POST /api/v1/message` recebe `gospel`, `book`, `messageOfDay` e `account` como campos obrigatórios e aceita `color` opcional, que deve ser um valor da paleta do projeto. A v1 trata `messageOfDay` como texto simples.
 
 `POST /api/v2/message` recebe os mesmos campos e gera uma imagem WebP (`image/webp`) de 896 × 1120. Na v2, `messageOfDay` aceita Markdown, incluindo negrito, itálico, listas e links. Use `<mark>texto</mark>` para destacar explicitamente um trecho; apenas essa tag, sem atributos, ativa o destaque. HTML arbitrário no conteúdo é escapado. Sem `color`, ambas as APIs sorteiam uma opção da paleta. Na tela, os botões baixam a prévia como PNG de 1080 × 1350.
@@ -46,7 +48,7 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `src/v1/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 

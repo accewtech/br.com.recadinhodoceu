@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import "./message-card.css";
+import "../src/shared/globals.css";
 import { DM_Sans, Geist_Mono, Playfair_Display } from "next/font/google";
 
 const dmSans = DM_Sans({

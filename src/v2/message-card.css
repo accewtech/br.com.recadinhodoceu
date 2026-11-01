@@ -1,0 +1,39 @@
+.reflection > :first-child {
+  margin-top: 0;
+}
+
+.reflection > :last-child {
+  margin-bottom: 0;
+}
+
+.reflection p,
+.reflection ul,
+.reflection ol,
+.reflection blockquote,
+.reflection pre {
+  margin-bottom: 0.6em;
+}
+
+.reflection ul,
+.reflection ol {
+  padding-left: 1.2em;
+}
+
+.reflection blockquote {
+  margin-left: 0;
+  padding-left: 0.8em;
+  border-left: 3px solid #d6d1cf;
+}
+
+.reflection mark.highlight {
+  padding: 1px 3px;
+  border-radius: 1px;
+  background: var(--message-highlight);
+  box-shadow: 0 0 0 2px var(--message-highlight);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.reflection code {
+  overflow-wrap: anywhere;
+}

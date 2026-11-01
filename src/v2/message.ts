@@ -1,8 +1,13 @@
 import MarkdownIt, { type Token } from "markdown-it";
-import {
+import type { MessageData } from "../shared/message-contract";
+
+export {
+  defaultMessage,
+  getRandomMessageColor,
+  MESSAGE_COLORS,
   type MessageColor,
   type MessageData,
-} from "./message";
+} from "../shared/message-contract";
 
 const markdown = new MarkdownIt({
   breaks: true,
@@ -42,7 +47,7 @@ markdown.renderer.rules.html_block = (tokens: Token[], index: number) =>
 markdown.renderer.rules.image = (tokens: Token[], index: number) =>
   escapeHtml(tokens[index].content);
 
-export function renderMessageCardMarkupV2(message: MessageData) {
+export function renderMessageCardMarkup(message: MessageData) {
   const gospel = escapeHtml(message.gospel.toUpperCase());
   const book = escapeHtml(message.book);
   const messageOfDay = markdown.render(message.messageOfDay);
@@ -60,5 +65,3 @@ export function renderMessageCardMarkupV2(message: MessageData) {
     </article>
   </div>`;
 }
-
-export type { MessageColor, MessageData };

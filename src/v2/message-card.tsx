@@ -1,21 +1,17 @@
 import type { CSSProperties, Ref } from "react";
 import {
-  renderMessageCardMarkupV2,
+  renderMessageCardMarkup,
   type MessageColor,
   type MessageData,
-} from "./message-v2";
+} from "./message";
 
-type MessageCardV2Props = {
+type MessageCardProps = {
   color: MessageColor;
   message: MessageData;
   previewRef?: Ref<HTMLDivElement>;
 };
 
-export function MessageCardV2({
-  color,
-  message,
-  previewRef,
-}: MessageCardV2Props) {
+export function MessageCard({ color, message, previewRef }: MessageCardProps) {
   const style = {
     backgroundColor: color,
     "--message-highlight": color,
@@ -24,7 +20,7 @@ export function MessageCardV2({
   return (
     <div
       className="preview-frame"
-      dangerouslySetInnerHTML={{ __html: renderMessageCardMarkupV2(message) }}
+      dangerouslySetInnerHTML={{ __html: renderMessageCardMarkup(message) }}
       ref={previewRef}
       style={style}
     />

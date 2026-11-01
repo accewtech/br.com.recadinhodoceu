@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { Download, Dices, RefreshCw } from "lucide-react";
 import { toPng } from "html-to-image";
 import {
@@ -9,8 +10,8 @@ import {
   MESSAGE_COLORS,
   type MessageColor,
   type MessageData,
-} from "../message";
-import { MessageCardV2 } from "../message-card-v2";
+} from "./message";
+import { MessageCard } from "./message-card";
 
 export default function MessageV2() {
   const [message, setMessage] = useState<MessageData>(defaultMessage);
@@ -51,10 +52,10 @@ export default function MessageV2() {
     <main className="workspace">
       <section className="editor-panel">
         <nav className="version-nav" aria-label="Versão da interface">
-          <a href="/v1">v1</a>
-          <a aria-current="page" href="/v2">
+          <Link href="/v1">v1</Link>
+          <Link aria-current="page" href="/v2">
             v2
-          </a>
+          </Link>
         </nav>
         <div className="eyebrow">RECADO DO DIA · V2</div>
         <h1>Crie um recadinho para compartilhar.</h1>
@@ -155,7 +156,7 @@ export default function MessageV2() {
           <span>Visualização · v2</span>
           <span>1080 × 1350</span>
         </div>
-        <MessageCardV2
+        <MessageCard
           color={color}
           key={JSON.stringify([color, message])}
           message={message}

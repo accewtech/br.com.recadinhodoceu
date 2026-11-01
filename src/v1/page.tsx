@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { Download, Dices, RefreshCw } from "lucide-react";
 import { toPng } from "html-to-image";
 import {
@@ -51,10 +52,10 @@ export default function Home() {
     <main className="workspace">
       <section className="editor-panel">
         <nav className="version-nav" aria-label="Versão da interface">
-          <a aria-current="page" href="/v1">
+          <Link aria-current="page" href="/v1">
             v1
-          </a>
-          <a href="/v2">v2</a>
+          </Link>
+          <Link href="/v2">v2</Link>
         </nav>
         <div className="eyebrow">RECADO DO DIA</div>
         <h1>Crie um recadinho para compartilhar.</h1>

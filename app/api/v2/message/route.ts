@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
-import { getRandomMessageColor, validateMessagePayload } from "../../../message";
-import { renderMessageWebpMarkup } from "../../../message-image";
-import { renderMessageCardMarkupV2 } from "../../../message-v2";
+import {
+  getRandomMessageColor,
+  renderMessageCardMarkup,
+} from "../../../../src/v2/message";
+import { validateMessagePayload } from "../../../../src/shared/message-contract";
+import { renderMessageWebpMarkup } from "../../../../src/shared/message-image";
 
 export const runtime = "nodejs";
 
@@ -32,10 +35,11 @@ export async function POST(request: Request) {
   }
 
   try {
-    const markup = renderMessageCardMarkupV2(data);
+    const markup = renderMessageCardMarkup(data);
     const image = await renderMessageWebpMarkup(
       markup,
       color ?? getRandomMessageColor(),
+      "v2",
     );
 
     return new Response(Buffer.from(image), {

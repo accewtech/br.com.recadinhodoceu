@@ -1,5 +1,4 @@
 export const MESSAGE_COLORS = [
-  "#FCF8F6",
   "#CEF1BF",
   "#FED9F7",
   "#B4DCEB",

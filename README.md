@@ -5,10 +5,15 @@ Aplicação Next.js para criar cards de mensagens e baixar a arte em PNG.
 ## Executar
 
 ```bash
-npm run dev
+yarn install
+yarn dev
 ```
 
 Abra `http://localhost:3000` para usar o editor visual.
+
+## Contribuir
+
+Instale as dependências com `yarn install`. O Husky configura automaticamente o hook `pre-commit`, que executa `yarn lint` antes de cada commit. Commits com erros de lint são bloqueados.
 
 No Windows, a API usa uma instalação local do Google Chrome. Se ele estiver em um caminho diferente do padrão, defina `CHROME_EXECUTABLE_PATH`. Em ambientes serverless Linux, o Chromium é fornecido pela dependência do projeto; reserve pelo menos 512 MB de memória para a função.
 
@@ -32,13 +37,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 First, run the development server:
 
 ```bash
-npm run dev
-# or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

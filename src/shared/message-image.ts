@@ -4,11 +4,7 @@ import puppeteer from "puppeteer-core";
 import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import {
-  renderMessageCardMarkup,
-  type MessageColor,
-  type MessageData,
-} from "./message";
+import { type MessageColor } from "./message-contract";
 
 const PREVIEW_WIDTH = 560;
 const PREVIEW_HEIGHT = 700;
@@ -48,14 +44,16 @@ async function getBrowserExecutablePath() {
   return chromium.executablePath();
 }
 
-export async function renderMessageWebp(
-  data: MessageData,
+export async function renderMessageWebpMarkup(
+  markup: string,
   color: MessageColor,
+  version: "v1" | "v2",
 ) {
-  const stylesheet = await readFile(
-    join(process.cwd(), "app", "message-card.css"),
-    "utf8",
-  );
+  const [sharedStylesheet, versionStylesheet] = await Promise.all([
+    readFile(join(process.cwd(), "src", "shared", "message-card.css"), "utf8"),
+    readFile(join(process.cwd(), "src", version, "message-card.css"), "utf8"),
+  ]);
+  const stylesheet = `${sharedStylesheet}\n${versionStylesheet}`;
   const browser = await puppeteer.launch({
     args: process.platform === "win32" ? [] : chromium.args,
     defaultViewport: {
@@ -66,10 +64,8 @@ export async function renderMessageWebp(
     executablePath: await getBrowserExecutablePath(),
     headless: "shell",
   });
-
   try {
     const page = await browser.newPage();
-    const markup = renderMessageCardMarkup(data);
     const html = `<!doctype html>
       <html lang="pt-BR">
         <head>

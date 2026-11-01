@@ -1,18 +1,23 @@
 {
   "name": "recadinhodoceu",
   "version": "0.3.1",
+  "license": "Apache-2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "format": "prettier --write ."
+    "typecheck": "tsc --noEmit",
+    "check": "prettier --check .",
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "dependencies": {
     "@sparticuz/chromium": "^147.0.0",
     "html-to-image": "^1.11.13",
     "lucide-react": "^0.554.0",
+    "markdown-it": "^15.0.3",
     "next": "16.2.3",
     "puppeteer-core": "24.42.0",
     "react": "19.2.0",
@@ -25,8 +30,10 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.0.3",
+    "husky": "^9.1.7",
     "prettier": "^3.8.2",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

@@ -47,6 +47,27 @@ button {
   max-width: 430px;
 }
 
+.version-nav {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.version-nav a {
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 5px 9px;
+  color: var(--muted);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.version-nav a[aria-current="page"] {
+  border-color: #9b6c83;
+  color: #9b6c83;
+  font-weight: 700;
+}
+
 .eyebrow {
   color: #9b6c83;
   font-size: 11px;
@@ -69,6 +90,13 @@ h1 {
   color: var(--muted);
   line-height: 1.55;
   margin: 0 0 30px;
+}
+
+.markdown-help {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
 .fields {

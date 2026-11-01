@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { Download, Dices, RefreshCw } from "lucide-react";
 import { toPng } from "html-to-image";
 import {
@@ -12,7 +13,7 @@ import {
 } from "./message";
 import { MessageCard } from "./message-card";
 
-export default function Home() {
+export default function MessageV2() {
   const [message, setMessage] = useState<MessageData>(defaultMessage);
   const [color, setColor] = useState<MessageColor>(MESSAGE_COLORS[1]);
   const [loading, setLoading] = useState(false);
@@ -39,7 +40,7 @@ export default function Home() {
       });
 
       const link = document.createElement("a");
-      link.download = "recadinho-do-ceu.png";
+      link.download = "recadinho-do-ceu-v2.png";
       link.href = dataUrl;
       link.click();
     } finally {
@@ -50,11 +51,17 @@ export default function Home() {
   return (
     <main className="workspace">
       <section className="editor-panel">
-        <div className="eyebrow">RECADO DO DIA</div>
+        <nav className="version-nav" aria-label="Versão da interface">
+          <Link href="/v1">v1</Link>
+          <Link aria-current="page" href="/v2">
+            v2
+          </Link>
+        </nav>
+        <div className="eyebrow">RECADO DO DIA · V2</div>
         <h1>Crie um recadinho para compartilhar.</h1>
         <p className="intro">
-          Preencha os campos e escolha uma cor para gerar a imagem no formato do
-          exemplo.
+          Formate a mensagem com Markdown e visualize o resultado antes de
+          baixar.
         </p>
 
         <div className="fields">
@@ -76,12 +83,17 @@ export default function Home() {
           <label>
             Mensagem do dia
             <textarea
+              aria-describedby="markdown-help"
               value={message.messageOfDay}
               onChange={(event) =>
                 updateMessage("messageOfDay", event.target.value)
               }
               rows={5}
             />
+            <span className="markdown-help" id="markdown-help">
+              Markdown: **negrito**, *itálico* e{" "}
+              {"<mark>trecho destacado</mark>"}.
+            </span>
           </label>
           <label>
             Conta
@@ -130,20 +142,26 @@ export default function Home() {
         </button>
 
         <div className="api-note">
-          <strong>API disponível</strong>
-          <code>POST /api/message</code>
+          <strong>API da v2 disponível</strong>
+          <code>POST /api/v2/message</code>
           <span>
-            Gera um arquivo WebP para baixar ou integrar em outros sistemas.
+            Gera um arquivo WebP com suporte a Markdown e destaque por{" "}
+            {"<mark>"}.
           </span>
         </div>
       </section>
 
       <section className="preview-panel">
         <div className="preview-heading">
-          <span>Visualização</span>
+          <span>Visualização · v2</span>
           <span>1080 × 1350</span>
         </div>
-        <MessageCard color={color} message={message} previewRef={previewRef} />
+        <MessageCard
+          color={color}
+          key={JSON.stringify([color, message])}
+          message={message}
+          previewRef={previewRef}
+        />
       </section>
     </main>
   );

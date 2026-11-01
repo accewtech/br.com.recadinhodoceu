@@ -1,0 +1,9 @@
+.highlight {
+  padding: 1px 3px;
+  border-radius: 1px;
+  background: var(--message-highlight);
+  box-shadow: 0 0 0 2px var(--message-highlight);
+  box-decoration-break: clone;
+  font-size: clamp(12px, 4cqw, 18px);
+  -webkit-box-decoration-break: clone;
+}

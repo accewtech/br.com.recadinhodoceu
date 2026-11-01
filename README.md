@@ -5,22 +5,33 @@ Aplicação Next.js para criar cards de mensagens e baixar a arte em PNG.
 ## Executar
 
 ```bash
-npm run dev
+yarn install
+yarn dev
 ```
 
 Abra `http://localhost:3000` para usar o editor visual.
+
+## Contribuir
+
+Instale as dependências com `yarn install`. O Husky configura automaticamente o hook `pre-commit`, que executa `yarn lint` antes de cada commit. Commits com erros de lint são bloqueados.
 
 No Windows, a API usa uma instalação local do Google Chrome. Se ele estiver em um caminho diferente do padrão, defina `CHROME_EXECUTABLE_PATH`. Em ambientes serverless Linux, o Chromium é fornecido pela dependência do projeto; reserve pelo menos 512 MB de memória para a função.
 
 ## API
 
-`POST /api/message` recebe `gospel`, `book`, `messageOfDay` e `account` como campos obrigatórios e aceita `color` opcional, que deve ser um valor da paleta do projeto. A tela e a API compartilham o mesmo componente HTML e arquivo CSS; enviando os mesmos campos e a mesma cor, ambas compõem a mesma arte. Sem `color`, a API sorteia uma opção da paleta. A rota renderiza o HTML com Chromium headless e responde com um arquivo WebP (`image/webp`) de 896 × 1120 para download. Na tela, o botão baixa a prévia como PNG de 1080 × 1350. A composição do cartão usa HTML/CSS, sem SVG ou armazenamento externo.
+As interfaces estão disponíveis em `/v1` e `/v2`. A rota `/` mantém a interface da v1. A API atual permanece disponível em `POST /api/message` e também em `POST /api/v1/message`.
+
+As páginas ficam em `pages/`, usando o Pages Router. As regras e componentes de cada versão ficam em `src/v1` e `src/v2`; os recursos compartilhados ficam em `src/shared`. As Route Handlers das APIs permanecem organizadas em `app/api/v1` e `app/api/v2`.
+
+`POST /api/v1/message` recebe `gospel`, `book`, `messageOfDay` e `account` como campos obrigatórios e aceita `color` opcional, que deve ser um valor da paleta do projeto. A v1 trata `messageOfDay` como texto simples.
+
+`POST /api/v2/message` recebe os mesmos campos e gera uma imagem WebP (`image/webp`) de 896 × 1120. Na v2, `messageOfDay` aceita Markdown, incluindo negrito, itálico, listas e links. Use `<mark>texto</mark>` para destacar explicitamente um trecho; apenas essa tag, sem atributos, ativa o destaque. HTML arbitrário no conteúdo é escapado. Sem `color`, ambas as APIs sorteiam uma opção da paleta. Na tela, os botões baixam a prévia como PNG de 1080 × 1350.
 
 ```json
 {
   "gospel": "NÃO TE DIGO ATÉ SETE VEZES, MAS ATÉ SETENTA VEZES SETE.",
   "book": "Mateus 18, 22",
-  "messageOfDay": "Perdoar não é só um gesto, é um ato de amor e liberdade.",
+  "messageOfDay": "**Perdoar** é um ato de <mark>amor e liberdade</mark>.",
   "account": "@recadinhodoceu__"
 }
 ```
@@ -32,18 +43,12 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 First, run the development server:
 
 ```bash
-npm run dev
-# or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `src/v1/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 

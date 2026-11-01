@@ -19,13 +19,17 @@ No Windows, a API usa uma instalação local do Google Chrome. Se ele estiver em
 
 ## API
 
-`POST /api/message` recebe `gospel`, `book`, `messageOfDay` e `account` como campos obrigatórios e aceita `color` opcional, que deve ser um valor da paleta do projeto. A tela e a API compartilham o mesmo componente HTML e arquivo CSS; enviando os mesmos campos e a mesma cor, ambas compõem a mesma arte. Sem `color`, a API sorteia uma opção da paleta. A rota renderiza o HTML com Chromium headless e responde com um arquivo WebP (`image/webp`) de 896 × 1120 para download. Na tela, o botão baixa a prévia como PNG de 1080 × 1350. A composição do cartão usa HTML/CSS, sem SVG ou armazenamento externo.
+As interfaces estão disponíveis em `/v1` e `/v2`. A rota `/` mantém a interface da v1. A API atual permanece disponível em `POST /api/message` e também em `POST /api/v1/message`.
+
+`POST /api/v1/message` recebe `gospel`, `book`, `messageOfDay` e `account` como campos obrigatórios e aceita `color` opcional, que deve ser um valor da paleta do projeto. A v1 trata `messageOfDay` como texto simples.
+
+`POST /api/v2/message` recebe os mesmos campos e gera uma imagem WebP (`image/webp`) de 896 × 1120. Na v2, `messageOfDay` aceita Markdown, incluindo negrito, itálico, listas e links. Use `<mark>texto</mark>` para destacar explicitamente um trecho; apenas essa tag, sem atributos, ativa o destaque. HTML arbitrário no conteúdo é escapado. Sem `color`, ambas as APIs sorteiam uma opção da paleta. Na tela, os botões baixam a prévia como PNG de 1080 × 1350.
 
 ```json
 {
   "gospel": "NÃO TE DIGO ATÉ SETE VEZES, MAS ATÉ SETENTA VEZES SETE.",
   "book": "Mateus 18, 22",
-  "messageOfDay": "Perdoar não é só um gesto, é um ato de amor e liberdade.",
+  "messageOfDay": "**Perdoar** é um ato de <mark>amor e liberdade</mark>.",
   "account": "@recadinhodoceu__"
 }
 ```

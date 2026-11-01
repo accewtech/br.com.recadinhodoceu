@@ -50,6 +50,12 @@ export default function Home() {
   return (
     <main className="workspace">
       <section className="editor-panel">
+        <nav className="version-nav" aria-label="Versão da interface">
+          <a aria-current="page" href="/v1">
+            v1
+          </a>
+          <a href="/v2">v2</a>
+        </nav>
         <div className="eyebrow">RECADO DO DIA</div>
         <h1>Crie um recadinho para compartilhar.</h1>
         <p className="intro">
@@ -143,7 +149,12 @@ export default function Home() {
           <span>Visualização</span>
           <span>1080 × 1350</span>
         </div>
-        <MessageCard color={color} message={message} previewRef={previewRef} />
+        <MessageCard
+          color={color}
+          key={JSON.stringify([color, message])}
+          message={message}
+          previewRef={previewRef}
+        />
       </section>
     </main>
   );

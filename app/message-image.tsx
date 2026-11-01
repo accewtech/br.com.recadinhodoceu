@@ -52,6 +52,13 @@ export async function renderMessageWebp(
   data: MessageData,
   color: MessageColor,
 ) {
+  return renderMessageWebpMarkup(renderMessageCardMarkup(data), color);
+}
+
+export async function renderMessageWebpMarkup(
+  markup: string,
+  color: MessageColor,
+) {
   const stylesheet = await readFile(
     join(process.cwd(), "app", "message-card.css"),
     "utf8",
@@ -66,10 +73,8 @@ export async function renderMessageWebp(
     executablePath: await getBrowserExecutablePath(),
     headless: "shell",
   });
-
   try {
     const page = await browser.newPage();
-    const markup = renderMessageCardMarkup(data);
     const html = `<!doctype html>
       <html lang="pt-BR">
         <head>

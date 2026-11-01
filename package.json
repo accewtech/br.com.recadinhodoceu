@@ -8,6 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "check": "prettier --check .",
     "format": "prettier --write .",
     "prepare": "husky"
   },

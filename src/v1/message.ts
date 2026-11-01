@@ -23,10 +23,14 @@ function escapeHtml(value: string) {
 }
 
 export function renderMessageCardMarkup(message: MessageData) {
-  const gospel = escapeHtml(message.gospel.toUpperCase());
-  const book = escapeHtml(message.book.replace(/^\(|\)$/g, ""));
-  const messageOfDay = escapeHtml(message.messageOfDay);
-  const account = escapeHtml(message.account);
+  const gospel = message.gospel ? escapeHtml(message.gospel.toUpperCase()) : "";
+  const book = message.book
+    ? escapeHtml(message.book.replace(/^\(|\)$/g, ""))
+    : "";
+  const messageOfDay = message.messageOfDay
+    ? escapeHtml(message.messageOfDay)
+    : "";
+  const account = message.account ? escapeHtml(message.account) : "";
 
   return `<div class="card-stack">
     <div class="backing-layer backing-layer-dark"></div>

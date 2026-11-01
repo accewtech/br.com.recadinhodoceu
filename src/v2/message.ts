@@ -48,10 +48,12 @@ markdown.renderer.rules.image = (tokens: Token[], index: number) =>
   escapeHtml(tokens[index].content);
 
 export function renderMessageCardMarkup(message: MessageData) {
-  const gospel = escapeHtml(message.gospel.toUpperCase());
-  const book = escapeHtml(message.book);
-  const messageOfDay = markdown.render(message.messageOfDay);
-  const account = escapeHtml(message.account);
+  const gospel = message.gospel ? escapeHtml(message.gospel.toUpperCase()) : "";
+  const book = message.book ? escapeHtml(message.book) : "";
+  const messageOfDay = message.messageOfDay
+    ? markdown.render(message.messageOfDay)
+    : "";
+  const account = message.account ? escapeHtml(message.account) : "";
 
   return `<div class="card-stack">
     <div class="backing-layer backing-layer-dark"></div>

@@ -12,10 +12,10 @@ export const MESSAGE_COLORS = [
 export type MessageColor = (typeof MESSAGE_COLORS)[number];
 
 export type MessageData = {
-  gospel: string;
-  book: string;
-  messageOfDay: string;
-  account: string;
+  gospel?: string;
+  book?: string;
+  messageOfDay?: string;
+  account?: string;
 };
 
 export const defaultMessage: MessageData = {
@@ -38,13 +38,13 @@ export function validateMessagePayload(value: unknown): {
 } {
   if (!value || typeof value !== "object") {
     return {
-      missing: ["gospel", "book", "messageOfDay", "account"],
+      missing: ["messageOfDay", "account"],
       hasInvalidColor: false,
     };
   }
 
   const payload = value as Record<string, unknown>;
-  const requiredFields = ["gospel", "book", "messageOfDay", "account"];
+  const requiredFields = ["messageOfDay", "account"];
   const missing = requiredFields.filter(
     (field) => typeof payload[field] !== "string" || !payload[field]?.trim(),
   );
@@ -57,10 +57,22 @@ export function validateMessagePayload(value: unknown): {
 
   return {
     data: {
-      gospel: String(payload.gospel).trim(),
-      book: String(payload.book).trim(),
-      messageOfDay: String(payload.messageOfDay).trim(),
-      account: String(payload.account).trim(),
+      gospel:
+        typeof payload.gospel === "string"
+          ? String(payload.gospel).trim()
+          : undefined,
+      book:
+        typeof payload.book === "string"
+          ? String(payload.book).trim()
+          : undefined,
+      messageOfDay:
+        typeof payload.messageOfDay === "string"
+          ? String(payload.messageOfDay).trim()
+          : undefined,
+      account:
+        typeof payload.account === "string"
+          ? String(payload.account).trim()
+          : undefined,
     },
     color,
     missing: [],

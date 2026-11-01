@@ -95,6 +95,6 @@
 .footer {
   margin-top: auto;
   font-family: "Inter", sans-serif;
-  font-weight: 500;
+  font-weight: 700;
   font-size: clamp(12px, 4cqw, 26px);
 }

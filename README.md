@@ -12,14 +12,14 @@ yarn dev
 Configure a autenticação antes de acessar o editor:
 
 1. Copie `.env.example` para `.env.local`.
-2. Defina `AUTH_USERNAME` com o usuário de acesso.
+2. Defina `AUTH_USERNAME` com o usuário de acesso em `.env.local` (por exemplo, `AUTH_USERNAME=admin`).
 3. Gere o hash scrypt da senha com Node.js:
 
    ```bash
-   node -e "const {randomBytes,scryptSync}=require('node:crypto'); const readline=require('node:readline').createInterface({input:process.stdin,output:process.stdout}); readline.question('Senha: ', password => {const salt=randomBytes(16); console.log(salt.toString('hex')+String.fromCharCode(36)+scryptSync(password,salt,64).toString('hex')); readline.close();})"
+   node -e "const {randomBytes,scryptSync}=require('node:crypto'); const readline=require('node:readline').createInterface({input:process.stdin,output:process.stdout}); readline.question('Senha: ', password => {const salt=randomBytes(16); console.log(salt.toString('hex')+String.fromCharCode(92,36)+scryptSync(password,salt,64).toString('hex')); readline.close();})"
    ```
 
-   Copie o resultado para `AUTH_PASSWORD_HASH`. Ele contém um salt aleatório de 16 bytes e um hash scrypt de 64 bytes, ambos em hexadecimal e separados por `$`.
+   Copie o resultado, incluindo a barra invertida antes de `$`, para `AUTH_PASSWORD_HASH`. O Next.js usa `$` para expansão de variáveis no `.env`; a barra invertida preserva o separador, e a aplicação recebe o valor sem a barra. O valor contém um salt aleatório de 16 bytes e um hash scrypt de 64 bytes, ambos em hexadecimal e separados por `$`.
 
 4. Gere um segredo JWT com pelo menos 32 bytes:
 

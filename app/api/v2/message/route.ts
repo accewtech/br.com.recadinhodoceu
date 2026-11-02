@@ -10,9 +10,7 @@ import { renderMessageWebpMarkup } from "../../../../src/shared/message-image";
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  const authenticationError = getApiAuthenticationError(
-    request.headers.get("cookie"),
-  );
+  const authenticationError = getApiAuthenticationError(request.headers);
   if (authenticationError) {
     return authenticationError;
   }

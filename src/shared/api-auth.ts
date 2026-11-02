@@ -1,9 +1,16 @@
 import { NextResponse } from "next/server";
-import { getSessionFromCookieHeader } from "./auth";
+import { getSessionFromCookieHeader, getSessionFromToken } from "./auth";
 
-export function getApiAuthenticationError(cookieHeader: string | null) {
+export function getApiAuthenticationError(headers: Headers) {
   try {
-    if (getSessionFromCookieHeader(cookieHeader)) {
+    const authorization = headers.get("authorization");
+    const bearerToken = authorization?.match(/^Bearer[ \t]+(\S+)$/i)?.[1];
+    const session =
+      authorization !== null
+        ? getSessionFromToken(bearerToken ?? null)
+        : getSessionFromCookieHeader(headers.get("cookie"));
+
+    if (session) {
       return null;
     }
 

@@ -29,7 +29,7 @@ Configure a autenticação antes de acessar o editor:
 
    Copie o resultado para `JWT_SECRET`. Não compartilhe nem versione `.env.local`.
 
-Abra `http://localhost:3000`. A página inicial `/` é pública; `/login` permite autenticação. As páginas `/v1` e `/v2` e as APIs de geração de imagem exigem uma sessão JWT válida. A sessão é mantida em um cookie `HttpOnly`, expira após uma hora e usa `Secure` em produção. Para encerrar a sessão, use a opção de sair no editor.
+Abra `http://localhost:3000`. A página inicial `/` é pública; `/login` permite autenticação. As páginas `/v1` e `/v2` exigem a sessão JWT no cookie `HttpOnly`. As APIs de geração de imagem aceitam essa sessão pelo cookie ou pelo header `Authorization: Bearer <token>`. Para clientes de API, use o valor JWT do cookie `recadinho_session` recebido no header `Set-Cookie` pela resposta de login como bearer token. O JWT é assinado e verificado com `jsonwebtoken` usando HS256, expira após uma hora e o cookie usa `Secure` em produção. Para encerrar a sessão do navegador, use a opção de sair no editor.
 
 Credenciais ou segredo ausentes ou inválidos deixam a autenticação indisponível; configure as variáveis de ambiente corretamente antes de iniciar a aplicação.
 

@@ -1,10 +1,10 @@
 import {
   createHash,
-  createHmac,
   scrypt as scryptCallback,
   timingSafeEqual,
 } from "node:crypto";
 import { promisify } from "node:util";
+import * as jwt from "jsonwebtoken";
 
 const scrypt = promisify(scryptCallback);
 const SESSION_COOKIE_NAME = "recadinho_session";
@@ -86,88 +86,52 @@ export async function validateCredentials(username: string, password: string) {
 
 function signSessionToken(username: string) {
   const config = getAuthConfiguration();
-  const issuedAt = Math.floor(Date.now() / 1000);
-  const claims: SessionClaims = {
-    sub: username,
-    iss: SESSION_ISSUER,
-    aud: SESSION_AUDIENCE,
-    iat: issuedAt,
-    exp: issuedAt + SESSION_DURATION_SECONDS,
-  };
-  const header = Buffer.from(
-    JSON.stringify({ alg: "HS256", typ: "JWT" }),
-  ).toString("base64url");
-  const payload = Buffer.from(JSON.stringify(claims)).toString("base64url");
-  const unsignedToken = `${header}.${payload}`;
-  const signature = createHmac("sha256", config.jwtSecret)
-    .update(unsignedToken)
-    .digest("base64url");
-
-  return `${unsignedToken}.${signature}`;
+  return jwt.sign({ sub: username }, config.jwtSecret, {
+    algorithm: "HS256",
+    audience: SESSION_AUDIENCE,
+    expiresIn: SESSION_DURATION_SECONDS,
+    issuer: SESSION_ISSUER,
+  });
 }
 
 function verifySessionToken(token: string): SessionClaims | null {
   const config = getAuthConfiguration();
-  const parts = token.split(".");
-  if (parts.length !== 3 || parts.some((part) => !/^[\w-]+$/.test(part))) {
-    return null;
-  }
-
-  const [encodedHeader, encodedPayload, encodedSignature] = parts;
-  const expectedSignature = createHmac("sha256", config.jwtSecret)
-    .update(`${encodedHeader}.${encodedPayload}`)
-    .digest();
-  const actualSignature = Buffer.from(encodedSignature, "base64url");
-
-  if (
-    actualSignature.length !== expectedSignature.length ||
-    !timingSafeEqual(actualSignature, expectedSignature)
-  ) {
-    return null;
-  }
-
-  let header: unknown;
-  let claims: unknown;
   try {
-    header = JSON.parse(
-      Buffer.from(encodedHeader, "base64url").toString("utf8"),
-    );
-    claims = JSON.parse(
-      Buffer.from(encodedPayload, "base64url").toString("utf8"),
-    );
-  } catch {
-    return null;
-  }
+    const claims = jwt.verify(token, config.jwtSecret, {
+      algorithms: ["HS256"],
+      audience: SESSION_AUDIENCE,
+      issuer: SESSION_ISSUER,
+      subject: config.username,
+    });
+    if (typeof claims === "string") {
+      return null;
+    }
 
-  if (
-    !header ||
-    typeof header !== "object" ||
-    !("alg" in header) ||
-    header.alg !== "HS256" ||
-    !claims ||
-    typeof claims !== "object"
-  ) {
-    return null;
-  }
+    const session = claims as Partial<SessionClaims>;
+    const currentTime = Math.floor(Date.now() / 1000);
+    if (
+      typeof session.sub !== "string" ||
+      session.sub !== config.username ||
+      session.iss !== SESSION_ISSUER ||
+      session.aud !== SESSION_AUDIENCE ||
+      typeof session.iat !== "number" ||
+      !Number.isInteger(session.iat) ||
+      typeof session.exp !== "number" ||
+      !Number.isInteger(session.exp) ||
+      session.exp <= currentTime ||
+      session.iat > currentTime
+    ) {
+      return null;
+    }
 
-  const session = claims as Partial<SessionClaims>;
-  const currentTime = Math.floor(Date.now() / 1000);
-  if (
-    typeof session.sub !== "string" ||
-    session.sub !== config.username ||
-    session.iss !== SESSION_ISSUER ||
-    session.aud !== SESSION_AUDIENCE ||
-    typeof session.iat !== "number" ||
-    !Number.isInteger(session.iat) ||
-    typeof session.exp !== "number" ||
-    !Number.isInteger(session.exp) ||
-    session.exp <= currentTime ||
-    session.iat > currentTime
-  ) {
-    return null;
-  }
+    return session as SessionClaims;
+  } catch (error) {
+    if (error instanceof jwt.JsonWebTokenError) {
+      return null;
+    }
 
-  return session as SessionClaims;
+    throw error;
+  }
 }
 
 function getCookieValue(cookieHeader: string | null, name: string) {
@@ -181,6 +145,10 @@ function getCookieValue(cookieHeader: string | null, name: string) {
 
 export function getSessionFromCookieHeader(cookieHeader: string | null) {
   const token = getCookieValue(cookieHeader, SESSION_COOKIE_NAME);
+  return getSessionFromToken(token ?? null);
+}
+
+export function getSessionFromToken(token: string | null) {
   return token ? verifySessionToken(token) : null;
 }
 

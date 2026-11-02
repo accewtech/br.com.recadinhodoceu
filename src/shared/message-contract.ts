@@ -22,7 +22,7 @@ export const defaultMessage: MessageData = {
   gospel: "NÃO TE DIGO ATÉ SETE VEZES, MAS ATÉ SETENTA VEZES SETE.",
   book: "(Mateus 18, 22)",
   messageOfDay:
-    "Perdoar não é só um gesto, é um ato de amor e liberdade. Cada vez que liberamos o outro, nos libertamos também. Hoje, escolha o perdão e veja sua vida se transformar.",
+    "Perdoar não é só um gesto, é um ato de amor e liberdade. <mark>Cada vez que liberamos o outro, nos libertamos também</mark>. Hoje, escolha o perdão e veja sua vida se transformar.",
   account: "@recadinhodoceu__",
 };
 

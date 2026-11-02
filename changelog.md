@@ -4,6 +4,17 @@ Notable project changes are recorded here. Entries are written in English and gr
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-02
+
+### Added
+
+- Added iOS-inspired selection handles to highlighted text in the v2 card.
+- Added a textured SVG card shape to the message card design.
+
+### Changed
+
+- Made the v2 editor the default homepage and added a highlighted sample passage.
+
 ## [0.4.0] - 2026-11-01
 
 ### Added

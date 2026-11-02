@@ -4,6 +4,12 @@ Notable project changes are recorded here. Entries are written in English and gr
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-11-02
+
+### Fixed
+
+- Split the password salt and scrypt hash into separate environment variables to avoid delimiter parsing issues in deployment environments.
+
 ## [1.1.0] - 2026-11-02
 
 ### Added

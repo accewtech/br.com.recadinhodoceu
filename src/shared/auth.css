@@ -60,3 +60,22 @@
   color: #a12632;
   font-size: 13px;
 }
+
+.auth-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logout-control {
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 5px 9px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.logout-control:disabled {
+  cursor: wait;
+}

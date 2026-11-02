@@ -4,6 +4,17 @@ Notable project changes are recorded here. Entries are written in English and gr
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-11-02
+
+### Added
+
+- Added a public home page and login flow for the protected message editors.
+- Added JWT bearer-token authentication for the message-generation APIs.
+
+### Security
+
+- Protected the v1 and v2 editors and message-generation APIs with JWT sessions.
+
 ## [1.0.0] - 2026-11-02
 
 ### Added

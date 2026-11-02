@@ -32,10 +32,10 @@ markdown.renderer.rules.html_inline = (tokens: Token[], index: number) => {
   const content = tokens[index].content;
 
   if (content.toLowerCase() === "<mark>") {
-    return '<mark class="highlight">';
+    return '<mark class="highlight"><span class="selection-handle selection-handle-leading" aria-hidden="true"></span>';
   }
   if (content.toLowerCase() === "</mark>") {
-    return "</mark>";
+    return '<span class="selection-handle selection-handle-trailing" aria-hidden="true"></span></mark>';
   }
 
   return escapeHtml(content);

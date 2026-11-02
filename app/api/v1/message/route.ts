@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getApiAuthenticationError } from "../../../../src/shared/api-auth";
 import {
   getRandomMessageColor,
   renderMessageCardMarkup,
@@ -9,6 +10,13 @@ import { renderMessageWebpMarkup } from "../../../../src/shared/message-image";
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  const authenticationError = getApiAuthenticationError(
+    request.headers.get("cookie"),
+  );
+  if (authenticationError) {
+    return authenticationError;
+  }
+
   let payload: unknown;
 
   try {

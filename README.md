@@ -9,7 +9,29 @@ yarn install
 yarn dev
 ```
 
-Abra `http://localhost:3000` para usar o editor visual.
+Configure a autenticação antes de acessar o editor:
+
+1. Copie `.env.example` para `.env.local`.
+2. Defina `AUTH_USERNAME` com o usuário de acesso.
+3. Gere o hash scrypt da senha com Node.js:
+
+   ```bash
+   node -e "const {randomBytes,scryptSync}=require('node:crypto'); const readline=require('node:readline').createInterface({input:process.stdin,output:process.stdout}); readline.question('Senha: ', password => {const salt=randomBytes(16); console.log(salt.toString('hex')+String.fromCharCode(36)+scryptSync(password,salt,64).toString('hex')); readline.close();})"
+   ```
+
+   Copie o resultado para `AUTH_PASSWORD_HASH`. Ele contém um salt aleatório de 16 bytes e um hash scrypt de 64 bytes, ambos em hexadecimal e separados por `$`.
+
+4. Gere um segredo JWT com pelo menos 32 bytes:
+
+   ```bash
+   node -e "console.log(require('node:crypto').randomBytes(32).toString('base64url'))"
+   ```
+
+   Copie o resultado para `JWT_SECRET`. Não compartilhe nem versione `.env.local`.
+
+Abra `http://localhost:3000`. A página inicial `/` é pública; `/login` permite autenticação. As páginas `/v1` e `/v2` e as APIs de geração de imagem exigem uma sessão JWT válida. A sessão é mantida em um cookie `HttpOnly`, expira após uma hora e usa `Secure` em produção. Para encerrar a sessão, use a opção de sair no editor.
+
+Credenciais ou segredo ausentes ou inválidos deixam a autenticação indisponível; configure as variáveis de ambiente corretamente antes de iniciar a aplicação.
 
 ## Contribuir
 

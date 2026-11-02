@@ -26,12 +26,65 @@
 }
 
 .reflection mark.highlight {
-  padding: 1px 3px;
+  position: relative;
+  padding: 2px 3px;
   border-radius: 1px;
-  background: var(--message-highlight);
-  box-shadow: 0 0 0 2px var(--message-highlight);
+  background: color-mix(in srgb, var(--message-highlight) 30%, transparent);
+  box-shadow: 0 0 0 0.0625em
+    color-mix(in srgb, var(--message-highlight) 10%, transparent);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
+}
+
+.reflection .selection-handle {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  line-height: 0;
+  vertical-align: baseline;
+}
+
+.reflection .selection-handle::before,
+.reflection .selection-handle::after {
+  position: absolute;
+  background: var(--message-highlight);
+  content: "";
+}
+
+.reflection .selection-handle::before {
+  left: -0.0625em;
+  width: 0.125em;
+}
+
+.reflection .selection-handle::after {
+  left: -0.375em;
+  width: 0.75em;
+  height: 0.75em;
+  border-radius: 50%;
+}
+
+.reflection .selection-handle-leading::before {
+  top: -1.2em;
+  height: 1.5em;
+}
+
+.reflection .selection-handle-leading::after {
+  /* top: -1.95em; */
+  top: -1.7em;
+}
+
+.reflection .selection-handle-trailing::before {
+  top: -1.2em;
+  height: 1.5em;
+}
+
+.reflection .selection-handle-trailing::after {
+  top: 0.1em;
+}
+
+.reflection {
+  line-height: 1.7;
 }
 
 .reflection code {

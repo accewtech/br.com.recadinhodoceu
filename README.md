@@ -9,7 +9,29 @@ yarn install
 yarn dev
 ```
 
-Abra `http://localhost:3000` para usar o editor visual.
+Configure a autenticação antes de acessar o editor:
+
+1. Copie `.env.example` para `.env.local`.
+2. Defina `AUTH_USERNAME` com o usuário de acesso em `.env.local` (por exemplo, `AUTH_USERNAME=admin`).
+3. Gere o salt e o hash scrypt da senha com Node.js:
+
+   ```bash
+   node -e "const {randomBytes,scryptSync}=require('node:crypto'); const readline=require('node:readline').createInterface({input:process.stdin,output:process.stdout}); readline.question('Senha: ', password => {const salt=randomBytes(16); console.log('AUTH_PASSWORD_SALT='+salt.toString('hex')); console.log('AUTH_PASSWORD_HASH='+scryptSync(password,salt,64).toString('hex')); readline.close();})"
+   ```
+
+   O comando imprime as duas variáveis separadamente, sem delimitadores. Copie ambas para `.env.local` e configure-as também como variáveis de ambiente no Vercel: `AUTH_PASSWORD_SALT` recebe o salt aleatório de 16 bytes (32 caracteres hexadecimais) e `AUTH_PASSWORD_HASH` recebe o hash scrypt de 64 bytes (128 caracteres hexadecimais).
+
+4. Gere um segredo JWT com pelo menos 32 bytes:
+
+   ```bash
+   node -e "console.log(require('node:crypto').randomBytes(32).toString('base64url'))"
+   ```
+
+   Copie o resultado para `JWT_SECRET`. Não compartilhe nem versione `.env.local`.
+
+Abra `http://localhost:3000`. A página inicial `/` é pública; `/login` permite autenticação. As páginas `/v1` e `/v2` exigem a sessão JWT no cookie `HttpOnly`. As APIs de geração de imagem aceitam essa sessão pelo cookie ou pelo header `Authorization: Bearer <token>`. Para clientes de API, use o valor JWT do cookie `recadinho_session` recebido no header `Set-Cookie` pela resposta de login como bearer token. O JWT é assinado e verificado com `jsonwebtoken` usando HS256, expira após uma hora e o cookie usa `Secure` em produção. Para encerrar a sessão do navegador, use a opção de sair no editor.
+
+Credenciais ou segredo ausentes ou inválidos deixam a autenticação indisponível; configure as variáveis de ambiente corretamente antes de iniciar a aplicação.
 
 ## Contribuir
 

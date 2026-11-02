@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Download, Dices, RefreshCw } from "lucide-react";
 import { toPng } from "html-to-image";
+import { LogoutButton } from "../shared/auth-controls";
 import {
   defaultMessage,
   getRandomMessageColor,
@@ -52,6 +53,7 @@ export default function MessageV2() {
     <main className="workspace">
       <section className="editor-panel">
         <nav className="version-nav" aria-label="Versão da interface">
+          <LogoutButton />
           <Link href="/v1">v1</Link>
           <Link aria-current="page" href="/v2">
             v2

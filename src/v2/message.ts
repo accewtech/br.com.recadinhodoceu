@@ -1,5 +1,6 @@
 import MarkdownIt, { type Token } from "markdown-it";
 import type { MessageData } from "../shared/message-contract";
+import { CARD_SHAPE_MARKUP } from "../shared/card-shape";
 
 export {
   defaultMessage,
@@ -56,8 +57,9 @@ export function renderMessageCardMarkup(message: MessageData) {
   const account = message.account ? escapeHtml(message.account) : "";
 
   return `<div class="card-stack">
-    <div class="backing-layer backing-layer-dark"></div>
-    <div class="backing-layer backing-layer-light"></div>
+     <!-- <div class="backing-layer backing-layer-dark"></div> -->
+     <!-- <div class="backing-layer backing-layer-light"></div> -->
+    ${CARD_SHAPE_MARKUP}
     <article class="card">
       <header class="card-header">
         <h1 class="verse-title">${gospel}<span class="verse-reference">${book}</span></h1>

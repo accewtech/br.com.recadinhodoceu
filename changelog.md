@@ -4,6 +4,19 @@ Notable project changes are recorded here. Entries are written in English and gr
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-01
+
+### Added
+
+- Added a versioned v2 message editor and API with Markdown formatting and explicit text highlights.
+- Added the v1 API endpoint while keeping `/api/message` available as a v1 compatibility route.
+- Added Dependabot configuration, pre-commit lint checks, and trademark usage guidelines.
+
+### Changed
+
+- Organized message rendering into version-specific modules and shared resources.
+- Standardized the dependency lockfile on Yarn.
+
 ## [0.3.1] - 2026-10-23
 
 ### Fixed

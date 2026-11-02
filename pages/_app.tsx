@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { DM_Sans, Geist_Mono, Playfair_Display } from "next/font/google";
 import "../src/shared/globals.css";
+import "../src/shared/auth.css";
 import "../src/shared/message-card.css";
 import "../src/v1/message-card.css";
 import "../src/v2/message-card.css";

@@ -13,13 +13,13 @@ Configure a autenticação antes de acessar o editor:
 
 1. Copie `.env.example` para `.env.local`.
 2. Defina `AUTH_USERNAME` com o usuário de acesso em `.env.local` (por exemplo, `AUTH_USERNAME=admin`).
-3. Gere o hash scrypt da senha com Node.js:
+3. Gere o salt e o hash scrypt da senha com Node.js:
 
    ```bash
-   node -e "const {randomBytes,scryptSync}=require('node:crypto'); const readline=require('node:readline').createInterface({input:process.stdin,output:process.stdout}); readline.question('Senha: ', password => {const salt=randomBytes(16); console.log(salt.toString('hex')+String.fromCharCode(92,36)+scryptSync(password,salt,64).toString('hex')); readline.close();})"
+   node -e "const {randomBytes,scryptSync}=require('node:crypto'); const readline=require('node:readline').createInterface({input:process.stdin,output:process.stdout}); readline.question('Senha: ', password => {const salt=randomBytes(16); console.log('AUTH_PASSWORD_SALT='+salt.toString('hex')); console.log('AUTH_PASSWORD_HASH='+scryptSync(password,salt,64).toString('hex')); readline.close();})"
    ```
 
-   Copie o resultado, incluindo a barra invertida antes de `$`, para `AUTH_PASSWORD_HASH`. O Next.js usa `$` para expansão de variáveis no `.env`; a barra invertida preserva o separador, e a aplicação recebe o valor sem a barra. O valor contém um salt aleatório de 16 bytes e um hash scrypt de 64 bytes, ambos em hexadecimal e separados por `$`.
+   O comando imprime as duas variáveis separadamente, sem delimitadores. Copie ambas para `.env.local` e configure-as também como variáveis de ambiente no Vercel: `AUTH_PASSWORD_SALT` recebe o salt aleatório de 16 bytes (32 caracteres hexadecimais) e `AUTH_PASSWORD_HASH` recebe o hash scrypt de 64 bytes (128 caracteres hexadecimais).
 
 4. Gere um segredo JWT com pelo menos 32 bytes:
 

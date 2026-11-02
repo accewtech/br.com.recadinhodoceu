@@ -30,26 +30,22 @@ type SessionClaims = {
 
 function getAuthConfiguration(): AuthConfiguration {
   const username = process.env.AUTH_USERNAME;
+  const passwordSaltHex = process.env.AUTH_PASSWORD_SALT;
   const passwordHashValue = process.env.AUTH_PASSWORD_HASH;
   const jwtSecret = process.env.JWT_SECRET;
 
-  if (!username || !passwordHashValue || !jwtSecret) {
+  if (!username || !passwordSaltHex || !passwordHashValue || !jwtSecret) {
     throw new Error(
-      "AUTH_USERNAME, AUTH_PASSWORD_HASH, and JWT_SECRET must be configured.",
+      "AUTH_USERNAME, AUTH_PASSWORD_SALT, AUTH_PASSWORD_HASH, and JWT_SECRET must be configured.",
     );
   }
 
-  const [passwordSaltHex, passwordHashHex, ...extraParts] =
-    passwordHashValue.split("$");
   if (
-    extraParts.length > 0 ||
-    !passwordSaltHex ||
     !/^[\da-f]{32}$/i.test(passwordSaltHex) ||
-    !passwordHashHex ||
-    !/^[\da-f]{128}$/i.test(passwordHashHex)
+    !/^[\da-f]{128}$/i.test(passwordHashValue)
   ) {
     throw new Error(
-      "AUTH_PASSWORD_HASH must contain a 16-byte salt and a 64-byte scrypt hash in hexadecimal, separated by '$'.",
+      "AUTH_PASSWORD_SALT must be a 16-byte hexadecimal value and AUTH_PASSWORD_HASH must be a 64-byte hexadecimal scrypt hash.",
     );
   }
 
@@ -61,7 +57,7 @@ function getAuthConfiguration(): AuthConfiguration {
   return {
     username,
     passwordSalt: Buffer.from(passwordSaltHex, "hex"),
-    passwordHash: Buffer.from(passwordHashHex, "hex"),
+    passwordHash: Buffer.from(passwordHashValue, "hex"),
     jwtSecret: secret,
   };
 }

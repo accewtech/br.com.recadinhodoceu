@@ -4,6 +4,47 @@ Notable project changes are recorded here. Entries are written in English and gr
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-11-02
+
+### Fixed
+
+- Split the password salt and scrypt hash into separate environment variables to avoid delimiter parsing issues in deployment environments.
+
+## [1.1.0] - 2026-11-02
+
+### Added
+
+- Added a public home page and login flow for the protected message editors.
+- Added JWT bearer-token authentication for the message-generation APIs.
+
+### Security
+
+- Protected the v1 and v2 editors and message-generation APIs with JWT sessions.
+
+## [1.0.0] - 2026-11-02
+
+### Added
+
+- Added iOS-inspired selection handles to highlighted text in the v2 card.
+- Added a textured SVG card shape to the message card design.
+
+### Changed
+
+- Made the v2 editor the default homepage and added a highlighted sample passage.
+
+## [0.4.0] - 2026-11-01
+
+### Added
+
+- Added a versioned v2 message editor and API with Markdown formatting and explicit text highlights.
+- Added the v1 API endpoint while keeping `/api/message` available as a v1 compatibility route.
+- Added Dependabot configuration, pre-commit lint checks, and trademark usage guidelines.
+
+### Changed
+
+- Organized message rendering into version-specific modules and shared resources.
+- Standardized the dependency lockfile on Yarn.
+
 ## [0.3.1] - 2026-10-23
 
 ### Fixed
